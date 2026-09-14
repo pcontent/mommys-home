@@ -3,4 +3,5 @@
 - Booksy page: https://booksy.com/pl-pl/dl/show-business/104316?utm_medium=c2c_referral
 - Phone number: +48577499626
 - adress: Dworska 10/1, 30-314 Kraków
+- placeholder for more info
 
