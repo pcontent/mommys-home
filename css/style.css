@@ -367,6 +367,13 @@ img, svg, iframe { max-width: 100%; }
   margin-bottom: 2.4rem;
 }
 
+.hero-sub .sub-line {
+  display: block;
+  max-width: 34ch;
+  margin-inline: auto;
+  text-wrap: balance;
+}
+
 .hero-cta {
   display: flex;
   gap: 1rem;
