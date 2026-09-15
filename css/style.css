@@ -520,33 +520,49 @@ body.loaded .anim-load { animation-play-state: running; }
   align-items: center;
 }
 
-.about-card {
-  background: linear-gradient(150deg, var(--liberty), var(--space-cadet));
-  border-radius: var(--radius);
-  padding: 3.4rem 2.4rem;
-  text-align: center;
-  color: var(--blush);
-  box-shadow: 0 24px 60px rgba(47, 44, 97, 0.3);
+.about-photo {
+  position: relative;
+  max-width: 440px;
+  justify-self: end;
   transform: rotate(2deg);
   transition: transform 0.5s var(--ease);
 }
 
-.about-card:hover { transform: rotate(0deg) translateY(-6px); }
-
-.about-sygnet { width: 88px; height: 80px; color: var(--blush); margin-bottom: 1.4rem; }
-
-.about-card p {
-  font-family: var(--font-head);
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 1.25rem;
-  line-height: 1.25;
+.about-photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  background: linear-gradient(150deg, var(--kobi), var(--liberty));
+  transform: rotate(-4deg);
 }
 
-.about-card em {
-  font-style: normal;
-  color: var(--kobi);
+.about-photo img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(47, 44, 97, 0.3);
 }
+
+.about-photo:hover { transform: rotate(0deg) translateY(-6px); }
+
+.about-photo-badge {
+  position: absolute;
+  bottom: -20px;
+  left: -20px;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: var(--space-cadet);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 30px rgba(47, 44, 97, 0.35);
+}
+
+.about-photo-badge svg { width: 44px; height: 40px; color: var(--blush); }
 
 /* ---------- Services ---------- */
 
@@ -833,7 +849,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) - 10px); }
 @media (max-width: 960px) {
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .about-inner, .contact-inner { grid-template-columns: 1fr; }
-  .about-card { max-width: 420px; margin-inline: auto; }
+  .about-photo { max-width: 400px; justify-self: auto; margin-inline: auto; }
   .contact-map iframe { height: 340px; }
 }
 
