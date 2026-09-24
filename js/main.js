@@ -56,6 +56,33 @@
     });
   }
 
+  /* Booksy links: hand off to the Booksy app when it is installed.
+     iOS relies on Universal Links (Booksy registers the /rwg/ paths), which only
+     fire on a same-tab navigation, so the new-tab target is dropped on phones.
+     Chromium browsers on Android get an intent:// URL that opens the app and
+     falls back to the normal web page when the app is missing. */
+  var ua = navigator.userAgent || "";
+  var isAndroid = /Android/i.test(ua);
+  var isIOS = /iPhone|iPad|iPod/i.test(ua);
+  var booksyLinks = document.querySelectorAll('a[href*="booksy.com"]');
+  if (isAndroid || isIOS) {
+    booksyLinks.forEach(function (link) {
+      link.removeAttribute("target");
+    });
+  }
+  if (isAndroid && !/Firefox/i.test(ua)) {
+    booksyLinks.forEach(function (link) {
+      link.addEventListener("click", function (e) {
+        var url = link.href;
+        e.preventDefault();
+        window.location.href =
+          "intent://" + url.replace(/^https?:\/\//, "") +
+          "#Intent;scheme=https;package=net.booksy.customer;S.browser_fallback_url=" +
+          encodeURIComponent(url) + ";end";
+      });
+    });
+  }
+
   /* Scroll reveal. */
   var revealEls = document.querySelectorAll(".reveal");
   if ("IntersectionObserver" in window && !reducedMotion) {
