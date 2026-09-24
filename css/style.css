@@ -190,6 +190,81 @@ button.btn {
   appearance: none;
 }
 
+/* ---------- Floating booking button ---------- */
+
+.fab-book {
+  position: fixed;
+  right: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--space-cadet);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 32px rgba(47, 44, 97, 0.28), 0 2px 6px rgba(47, 44, 97, 0.12);
+  z-index: 90;
+  opacity: 0;
+  transform: translateY(16px) scale(0.7);
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease), transform 0.45s var(--ease), box-shadow 0.35s var(--ease);
+}
+
+.fab-book svg { width: 26px; height: 26px; }
+
+.fab-book.visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.fab-book.visible:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(47, 44, 97, 0.34), 0 0 0 6px rgba(232, 156, 196, 0.35);
+}
+
+/* Hidden while the booking sheet or the Booksy widget is open. */
+body.booking-open .fab-book {
+  opacity: 0;
+  transform: translateY(16px) scale(0.7);
+  pointer-events: none;
+}
+
+/* Desktop hover label so the icon is unambiguous. */
+.fab-book::before {
+  content: "Umów wizytę";
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%) translateX(8px);
+  white-space: nowrap;
+  font-family: var(--font-head);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+  color: #fff;
+  background: var(--space-cadet);
+  padding: 0.6rem 0.95rem 0.45rem;
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.35s var(--ease);
+}
+
+@media (hover: hover) {
+  .fab-book.visible:hover::before {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+@media (max-width: 720px) {
+  .fab-book { right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: 56px; height: 56px; }
+}
+
 html { scroll-behavior: smooth; }
 
 body {
@@ -1081,6 +1156,8 @@ section[id] { scroll-margin-top: calc(var(--nav-h) - 10px); }
   .review-star { opacity: 1; transform: none; transition: none; }
 
   .book-sheet-backdrop, .book-sheet-panel { transition: none; }
+
+  .fab-book, .fab-book::before { transition: none; }
 
   .ghost-text { transform: translateY(-50%) !important; }
 }

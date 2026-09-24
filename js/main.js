@@ -78,6 +78,7 @@
     });
     removeWidgetCloseButton();
     document.body.style.overflow = "";
+    document.body.classList.remove("booking-open");
   }
 
   /* Lock page scrolling while the dialog is open; release it once Booksy
@@ -89,6 +90,7 @@
       var observer = new MutationObserver(function () {
         if (!document.querySelector(".booksy-widget-dialog")) {
           document.body.style.overflow = "";
+          document.body.classList.remove("booking-open");
           removeWidgetCloseButton();
           observer.disconnect();
         }
@@ -119,12 +121,14 @@
       window.scrollTo(0, scrollY);
     });
     if (isMobileDevice) addWidgetCloseButton();
+    document.body.classList.add("booking-open");
     lockScrollWhileWidgetOpen();
   }
 
   /* Mobile choice sheet: Booksy app (real link, so the OS can hand it to the app)
      or the on-page widget. */
   function openBookSheet() {
+    document.body.classList.add("booking-open");
     bookSheet.hidden = false;
     requestAnimationFrame(function () {
       bookSheet.classList.add("open");
@@ -137,6 +141,7 @@
   function closeBookSheet(immediately) {
     bookSheet.classList.remove("open");
     document.body.style.overflow = "";
+    document.body.classList.remove("booking-open");
     if (immediately) {
       bookSheet.hidden = true;
     } else {
@@ -277,6 +282,22 @@
     }, { passive: true });
   } else if (ghost) {
     ghost.style.transform = "translateY(-50%)";
+  }
+
+  /* Floating booking button: shown once the hero booking button has scrolled
+     above the viewport. It shares the data-booksy="book" behaviour above and is
+     hidden through body.booking-open while the sheet or widget is open. */
+  var fab = document.getElementById("fabBook");
+  var heroBookButton = document.querySelector(".hero-cta .btn-primary");
+  if (fab && heroBookButton && "IntersectionObserver" in window) {
+    var fabObserver = new IntersectionObserver(function (entries) {
+      var entry = entries[0];
+      var scrolledPast = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+      fab.classList.toggle("visible", scrolledPast);
+    }, { threshold: 0 });
+    fabObserver.observe(heroBookButton);
+  } else if (fab) {
+    fab.classList.add("visible");
   }
 
   /* Footer year. */
