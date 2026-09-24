@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Bump the ?v= value whenever css/style.css or js/main.js change, so browsers fetch the new files instead of a cached copy -->
-  <link rel="stylesheet" href="css/style.css?v=20260924-2">
+  <link rel="stylesheet" href="css/style.css?v=20260924-3">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -361,7 +361,7 @@
 
   <!-- Floating booking button: appears once the hero booking button scrolls out of view -->
   <a class="fab-book" id="fabBook" href="https://booksy.com/pl-pl/104316_mommys-home_salon-kosmetyczny_8820_krakow" target="_blank" rel="noopener" data-booksy="book" aria-label="Umów wizytę na Booksy">
-    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M8 3v3M16 3v3"/>
       <path d="M4 9h16"/>
       <path d="M20 12V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/>
@@ -377,13 +377,14 @@
       <svg class="book-sheet-sygnet" aria-hidden="true"><use href="#sygnet"></use></svg>
       <h2 id="bookSheetTitle">Umów wizytę</h2>
       <p>Masz aplikację Booksy? Otwórz nasz salon bezpośrednio w niej. Nie masz? Zarezerwuj tutaj, bez instalowania.</p>
-      <a class="btn btn-primary book-sheet-app" href="https://mommyshome.booksy.com/" rel="noopener">Otwórz w aplikacji Booksy</a>
+      <!-- Booksy deep link (Branch long link on Booksy's own domain): mobile_deeplink=show_business/104316 opens this salon inside the Booksy app -->
+      <a class="btn btn-primary book-sheet-app" href="https://cdl.booksy.com/a/key_live_flhKTnRyt5fr4gPqB7FzBnmmFyhDVlR1?mobile_deeplink=show_business%2F104316&amp;$canonical_url=https%3A%2F%2Fbooksy.com%2Fpl-pl%2F104316_mommys-home_salon-kosmetyczny_8820_krakow&amp;$desktop_url=https%3A%2F%2Fbooksy.com%2Fpl-pl%2F104316_mommys-home_salon-kosmetyczny_8820_krakow&amp;~feature=website&amp;~channel=mommyshomebrwi.com" rel="noopener">Otwórz w aplikacji Booksy</a>
       <button type="button" class="btn btn-ghost" id="bookSheetWidget">Zarezerwuj tutaj</button>
     </div>
   </div>
 
   <!-- Official Booksy booking widget: renders a hidden button and the booking overlay for business 104316 -->
   <script src="https://booksy.com/widget/code.js?id=104316&amp;country=pl&amp;lang=pl"></script>
-  <script src="js/main.js?v=20260924-2"></script>
+  <script src="js/main.js?v=20260924-3"></script>
 </body>
 </html>

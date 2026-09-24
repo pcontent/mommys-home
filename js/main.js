@@ -72,7 +72,46 @@
     widgetCloseButton = null;
   }
 
+  var finishWidgetLoader = null;
+
+  /* Brand loader shown inside Booksy's dialog until the widget iframe reports
+     "ready" through postMessage (with a time limit as a safety net). */
+  function showWidgetLoader(dialog) {
+    var loader = document.createElement("div");
+    loader.className = "booksy-loader";
+    loader.setAttribute("aria-live", "polite");
+    loader.innerHTML =
+      '<svg viewBox="0 0 120 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<path class="draw draw-1" d="M12 50 L60 13 L108 50" fill="none" stroke="#2F2C61" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path class="draw draw-2" d="M25 51 V88 Q25 95 32 95 H88 Q95 95 95 88 V51" fill="none" stroke="#2F2C61" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path class="draw draw-3" d="M60 81 C44 70 41.5 57 51.5 53 C56.5 51 60 55 60 60 C60 55 63.5 51 68.5 53 C78.5 57 76 70 60 81 Z" fill="none" stroke="#E89CC4" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>' +
+      "</svg><p>Ładujemy rezerwację</p>";
+    dialog.appendChild(loader);
+
+    var finished = false;
+    var timer = setTimeout(finish, 15000);
+    function finish() {
+      if (finished) return;
+      finished = true;
+      clearTimeout(timer);
+      window.removeEventListener("message", onMessage);
+      loader.classList.add("done");
+      setTimeout(function () {
+        if (loader.parentNode) loader.parentNode.removeChild(loader);
+      }, 450);
+      finishWidgetLoader = null;
+    }
+    function onMessage(e) {
+      if (String(e.origin).indexOf("booksy.com") === -1) return;
+      var data = e.data;
+      if (data && data.events && data.events.ready) finish();
+    }
+    window.addEventListener("message", onMessage);
+    finishWidgetLoader = finish;
+  }
+
   function closeBooksyWidget() {
+    if (finishWidgetLoader) finishWidgetLoader();
     document.querySelectorAll(".booksy-widget-dialog, .booksy-widget-overlay").forEach(function (el) {
       el.remove();
     });
@@ -120,6 +159,8 @@
     requestAnimationFrame(function () {
       window.scrollTo(0, scrollY);
     });
+    var dialog = document.querySelector(".booksy-widget-dialog");
+    if (dialog) showWidgetLoader(dialog);
     if (isMobileDevice) addWidgetCloseButton();
     document.body.classList.add("booking-open");
     lockScrollWhileWidgetOpen();
@@ -181,6 +222,16 @@
         setTimeout(function () { closeBookSheet(false); }, 800);
       });
     }
+  }
+
+  /* Return path of the "open in app" link: when the Booksy app is not installed,
+     the deep link sends the visitor back here with ?rezerwacja=1, and the widget
+     opens by itself so no one ends up in an app store. */
+  if (/[?&]rezerwacja=1(&|$)/.test(window.location.search)) {
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, "", window.location.pathname + window.location.hash);
+    }
+    setTimeout(openBooksyWidget, 500);
   }
 
   document.addEventListener("click", function (e) {

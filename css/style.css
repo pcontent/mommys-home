@@ -70,6 +70,50 @@ body .booksy-widget-dialog {
   }
 }
 
+/* Loading state inside Booksy's dialog until the widget reports it is ready:
+   the same self-drawing logo as the page preloader, looping. */
+.booksy-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  transition: opacity 0.4s ease;
+}
+
+.booksy-loader.done {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.booksy-loader svg {
+  width: 84px;
+  height: 77px;
+}
+
+.booksy-loader .draw {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: draw 1.4s var(--ease) infinite alternate;
+}
+
+.booksy-loader .draw-2 { animation-delay: 0.2s; }
+.booksy-loader .draw-3 { animation-delay: 0.45s; }
+
+.booksy-loader p {
+  font-family: var(--font-head);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.78rem;
+  color: var(--liberty);
+  margin: 0;
+}
+
 .booksy-close {
   position: fixed;
   top: calc(10px + env(safe-area-inset-top, 0px));
@@ -194,10 +238,10 @@ button.btn {
 
 .fab-book {
   position: fixed;
-  right: 20px;
-  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
-  width: 58px;
-  height: 58px;
+  right: 24px;
+  bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+  width: 62px;
+  height: 62px;
   border-radius: 50%;
   background: #fff;
   color: var(--space-cadet);
@@ -212,7 +256,7 @@ button.btn {
   transition: opacity 0.35s var(--ease), transform 0.45s var(--ease), box-shadow 0.35s var(--ease);
 }
 
-.fab-book svg { width: 26px; height: 26px; }
+.fab-book svg { width: 28px; height: 28px; }
 
 .fab-book.visible {
   opacity: 1;
@@ -262,7 +306,8 @@ body.booking-open .fab-book {
 }
 
 @media (max-width: 720px) {
-  .fab-book { right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: 56px; height: 56px; }
+  .fab-book { right: 20px; bottom: calc(30px + env(safe-area-inset-bottom, 0px)); width: 66px; height: 66px; }
+  .fab-book svg { width: 31px; height: 31px; }
 }
 
 html { scroll-behavior: smooth; }
@@ -1158,6 +1203,8 @@ section[id] { scroll-margin-top: calc(var(--nav-h) - 10px); }
   .book-sheet-backdrop, .book-sheet-panel { transition: none; }
 
   .fab-book, .fab-book::before { transition: none; }
+
+  .booksy-loader .draw { animation: none; stroke-dashoffset: 0; }
 
   .ghost-text { transform: translateY(-50%) !important; }
 }
