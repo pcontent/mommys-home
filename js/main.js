@@ -56,32 +56,60 @@
     });
   }
 
-  /* Booksy links: hand off to the Booksy app when it is installed.
-     iOS relies on Universal Links (Booksy registers the /rwg/ paths), which only
-     fire on a same-tab navigation, so the new-tab target is dropped on phones.
-     Chromium browsers on Android get an intent:// URL that opens the app and
-     falls back to the normal web page when the app is missing. */
-  var ua = navigator.userAgent || "";
-  var isAndroid = /Android/i.test(ua);
-  var isIOS = /iPhone|iPad|iPod/i.test(ua);
-  var booksyLinks = document.querySelectorAll('a[href*="booksy.com"]');
-  if (isAndroid || isIOS) {
-    booksyLinks.forEach(function (link) {
-      link.removeAttribute("target");
+  /* Booksy booking: the official widget (loaded in index.html) injects a hidden
+     .booksy-widget-button that opens Booksy's booking overlay for this salon.
+     Booking CTAs trigger that button; if the widget script did not load, the
+     links simply open the salon's Booksy page as usual. */
+  var bookingLinks = document.querySelectorAll('a[data-booksy="book"]');
+
+  function closeBooksyWidget() {
+    document.querySelectorAll(".booksy-widget-dialog, .booksy-widget-overlay").forEach(function (el) {
+      el.remove();
     });
   }
-  if (isAndroid && !/Firefox/i.test(ua)) {
-    booksyLinks.forEach(function (link) {
-      link.addEventListener("click", function (e) {
-        var url = link.href;
-        e.preventDefault();
-        window.location.href =
-          "intent://" + url.replace(/^https?:\/\//, "") +
-          "#Intent;scheme=https;package=net.booksy.customer;S.browser_fallback_url=" +
-          encodeURIComponent(url) + ";end";
+
+  /* Lock page scrolling while the dialog is open; release it once Booksy
+     (or the overlay click / Escape below) removes the dialog. */
+  function lockScrollWhileWidgetOpen() {
+    setTimeout(function () {
+      if (!document.querySelector(".booksy-widget-dialog")) return;
+      document.body.style.overflow = "hidden";
+      var observer = new MutationObserver(function () {
+        if (!document.querySelector(".booksy-widget-dialog")) {
+          document.body.style.overflow = "";
+          observer.disconnect();
+        }
       });
-    });
+      observer.observe(document.body, { childList: true });
+    }, 0);
   }
+
+  bookingLinks.forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      var widgetButton = document.querySelector(".booksy-widget-button");
+      if (!widgetButton) return;
+      e.preventDefault();
+      var scrollY = window.scrollY;
+      widgetButton.click();
+      /* The widget scrolls the page to the dialog; keep the visitor where they were. */
+      requestAnimationFrame(function () {
+        window.scrollTo(0, scrollY);
+      });
+      lockScrollWhileWidgetOpen();
+    });
+  });
+
+  document.addEventListener("click", function (e) {
+    if (e.target.classList && e.target.classList.contains("booksy-widget-overlay")) {
+      closeBooksyWidget();
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && document.querySelector(".booksy-widget-dialog")) {
+      closeBooksyWidget();
+    }
+  });
 
   /* Scroll reveal. */
   var revealEls = document.querySelectorAll(".reveal");

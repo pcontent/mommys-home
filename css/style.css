@@ -26,6 +26,35 @@
 
 .svg-defs { position: absolute; }
 
+/* Booksy widget: its default button stays hidden, our CTAs trigger it instead.
+   Booksy positions its dialog absolutely at the top of the document and scrolls
+   the page there; these overrides pin it to the viewport instead, so it opens
+   in view from anywhere on the page and scrolls internally when it is tall. */
+.booksy-widget-container { display: none !important; }
+
+body .booksy-widget-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1200 !important;
+  background: rgba(47, 44, 97, 0.72) !important;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+body .booksy-widget-dialog {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+  max-height: 92vh !important;
+  max-width: calc(100vw - 2rem) !important;
+  overflow-y: auto !important;
+  z-index: 1300 !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+}
+
 html { scroll-behavior: smooth; }
 
 body {
