@@ -89,7 +89,7 @@
     dialog.appendChild(loader);
 
     var finished = false;
-    var timer = setTimeout(finish, 15000);
+    var timer = setTimeout(finish, 20000);
     function finish() {
       if (finished) return;
       finished = true;
@@ -103,8 +103,12 @@
     }
     function onMessage(e) {
       if (String(e.origin).indexOf("booksy.com") === -1) return;
-      var data = e.data;
-      if (data && data.events && data.events.ready) finish();
+      var events = e.data && e.data.events;
+      if (!events) return;
+      /* "ready" arrives once the salon data is rendered; a tall resize means
+         the service list is on screen, which covers the case where "ready"
+         is never sent. */
+      if (events.ready || (events.resize && events.resize.height > 900)) finish();
     }
     window.addEventListener("message", onMessage);
     finishWidgetLoader = finish;

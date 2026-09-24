@@ -74,7 +74,10 @@ body .booksy-widget-dialog {
    the same self-drawing logo as the page preloader, looping. */
 .booksy-loader {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 2;
   background: #fff;
   display: flex;
@@ -83,6 +86,16 @@ body .booksy-widget-dialog {
   justify-content: center;
   gap: 1.1rem;
   transition: opacity 0.4s ease;
+}
+
+/* On phones the dialog fills the screen, so the loader is pinned to the
+   viewport itself (above the dialog, below the floating X); this also avoids
+   iOS Safari quirks with overlays inside scrolling containers. */
+@media (max-width: 720px) {
+  .booksy-loader {
+    position: fixed;
+    z-index: 1350;
+  }
 }
 
 .booksy-loader.done {
