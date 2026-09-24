@@ -61,15 +61,27 @@
      Booking CTAs trigger that button; if the widget script did not load, the
      links simply open the salon's Booksy page as usual. */
   var bookingLinks = document.querySelectorAll('a[data-booksy="book"]');
+  var isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent || "");
+  var bookSheet = document.getElementById("bookSheet");
+  var widgetCloseButton = null;
+
+  function removeWidgetCloseButton() {
+    if (widgetCloseButton && widgetCloseButton.parentNode) {
+      widgetCloseButton.parentNode.removeChild(widgetCloseButton);
+    }
+    widgetCloseButton = null;
+  }
 
   function closeBooksyWidget() {
     document.querySelectorAll(".booksy-widget-dialog, .booksy-widget-overlay").forEach(function (el) {
       el.remove();
     });
+    removeWidgetCloseButton();
+    document.body.style.overflow = "";
   }
 
   /* Lock page scrolling while the dialog is open; release it once Booksy
-     (or the overlay click / Escape below) removes the dialog. */
+     (or the overlay click / Escape / floating X) removes the dialog. */
   function lockScrollWhileWidgetOpen() {
     setTimeout(function () {
       if (!document.querySelector(".booksy-widget-dialog")) return;
@@ -77,6 +89,7 @@
       var observer = new MutationObserver(function () {
         if (!document.querySelector(".booksy-widget-dialog")) {
           document.body.style.overflow = "";
+          removeWidgetCloseButton();
           observer.disconnect();
         }
       });
@@ -84,20 +97,86 @@
     }, 0);
   }
 
+  /* On phones the widget fills the screen, so a floating X is the way back. */
+  function addWidgetCloseButton() {
+    if (widgetCloseButton) return;
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "booksy-close";
+    btn.setAttribute("aria-label", "Zamknij rezerwację");
+    btn.addEventListener("click", closeBooksyWidget);
+    document.body.appendChild(btn);
+    widgetCloseButton = btn;
+  }
+
+  function openBooksyWidget() {
+    var widgetButton = document.querySelector(".booksy-widget-button");
+    if (!widgetButton) return;
+    var scrollY = window.scrollY;
+    widgetButton.click();
+    /* The widget scrolls the page to the dialog; keep the visitor where they were. */
+    requestAnimationFrame(function () {
+      window.scrollTo(0, scrollY);
+    });
+    if (isMobileDevice) addWidgetCloseButton();
+    lockScrollWhileWidgetOpen();
+  }
+
+  /* Mobile choice sheet: Booksy app (real link, so the OS can hand it to the app)
+     or the on-page widget. */
+  function openBookSheet() {
+    bookSheet.hidden = false;
+    requestAnimationFrame(function () {
+      bookSheet.classList.add("open");
+    });
+    setTimeout(function () {
+      document.body.style.overflow = "hidden";
+    }, 0);
+  }
+
+  function closeBookSheet(immediately) {
+    bookSheet.classList.remove("open");
+    document.body.style.overflow = "";
+    if (immediately) {
+      bookSheet.hidden = true;
+    } else {
+      setTimeout(function () { bookSheet.hidden = true; }, 350);
+    }
+  }
+
   bookingLinks.forEach(function (link) {
     link.addEventListener("click", function (e) {
-      var widgetButton = document.querySelector(".booksy-widget-button");
-      if (!widgetButton) return;
+      /* Widget script missing: let the link open the Booksy page normally. */
+      if (!document.querySelector(".booksy-widget-button")) return;
       e.preventDefault();
-      var scrollY = window.scrollY;
-      widgetButton.click();
-      /* The widget scrolls the page to the dialog; keep the visitor where they were. */
-      requestAnimationFrame(function () {
-        window.scrollTo(0, scrollY);
-      });
-      lockScrollWhileWidgetOpen();
+      if (isMobileDevice && bookSheet) {
+        openBookSheet();
+      } else {
+        openBooksyWidget();
+      }
     });
   });
+
+  if (bookSheet) {
+    bookSheet.querySelectorAll("[data-sheet-close]").forEach(function (el) {
+      el.addEventListener("click", function () { closeBookSheet(false); });
+    });
+    var sheetWidgetButton = document.getElementById("bookSheetWidget");
+    if (sheetWidgetButton) {
+      sheetWidgetButton.addEventListener("click", function () {
+        closeBookSheet(true);
+        openBooksyWidget();
+      });
+    }
+    var sheetAppLink = bookSheet.querySelector(".book-sheet-app");
+    if (sheetAppLink) {
+      /* Default navigation stays: the tap must reach the OS for the app hand-off.
+         The sheet is tidied away for when the visitor comes back to this tab. */
+      sheetAppLink.addEventListener("click", function () {
+        setTimeout(function () { closeBookSheet(false); }, 800);
+      });
+    }
+  }
 
   document.addEventListener("click", function (e) {
     if (e.target.classList && e.target.classList.contains("booksy-widget-overlay")) {
@@ -106,8 +185,11 @@
   });
 
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && document.querySelector(".booksy-widget-dialog")) {
+    if (e.key !== "Escape") return;
+    if (document.querySelector(".booksy-widget-dialog")) {
       closeBooksyWidget();
+    } else if (bookSheet && !bookSheet.hidden) {
+      closeBookSheet(false);
     }
   });
 

@@ -55,6 +55,141 @@ body .booksy-widget-dialog {
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
 }
 
+/* On phones the widget takes the whole screen; a floating X (added by JS) closes it. */
+@media (max-width: 720px) {
+  body .booksy-widget-dialog {
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-height: none !important;
+    border-radius: 0 !important;
+  }
+}
+
+.booksy-close {
+  position: fixed;
+  top: calc(10px + env(safe-area-inset-top, 0px));
+  right: 12px;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(47, 44, 97, 0.35);
+  cursor: pointer;
+  z-index: 1400;
+}
+
+.booksy-close::before,
+.booksy-close::after,
+.book-sheet-x::before,
+.book-sheet-x::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 2.5px;
+  border-radius: 2px;
+  background: var(--space-cadet);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.booksy-close::after,
+.book-sheet-x::after { transform: translate(-50%, -50%) rotate(-45deg); }
+
+/* ---------- Mobile booking sheet (app or widget) ---------- */
+
+.book-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+}
+
+.book-sheet[hidden] { display: none; }
+
+.book-sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(47, 44, 97, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.book-sheet-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 520px;
+  margin-inline: auto;
+  background: #fff;
+  border-radius: 28px 28px 0 0;
+  padding: 1.7rem 1.5rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  text-align: center;
+  box-shadow: 0 -20px 60px rgba(47, 44, 97, 0.3);
+  transform: translateY(100%);
+  transition: transform 0.45s var(--ease);
+}
+
+.book-sheet.open .book-sheet-backdrop { opacity: 1; }
+.book-sheet.open .book-sheet-panel { transform: translateY(0); }
+
+.book-sheet-x {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--lavweb);
+  cursor: pointer;
+}
+
+.book-sheet-sygnet {
+  width: 56px;
+  height: 52px;
+  color: var(--liberty);
+  margin-bottom: 0.5rem;
+}
+
+.book-sheet h2 {
+  font-family: var(--font-head);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 1.7rem;
+  line-height: 1;
+  margin-bottom: 0.7rem;
+}
+
+.book-sheet p {
+  color: #4a477c;
+  font-size: 0.98rem;
+  max-width: 34ch;
+  margin: 0 auto 1.4rem;
+}
+
+.book-sheet .btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0.8rem;
+}
+
+button.btn {
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 html { scroll-behavior: smooth; }
 
 body {
@@ -944,6 +1079,8 @@ section[id] { scroll-margin-top: calc(var(--nav-h) - 10px); }
   .preloader { display: none; }
 
   .review-star { opacity: 1; transform: none; transition: none; }
+
+  .book-sheet-backdrop, .book-sheet-panel { transition: none; }
 
   .ghost-text { transform: translateY(-50%) !important; }
 }

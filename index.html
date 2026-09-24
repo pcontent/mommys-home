@@ -358,6 +358,19 @@
     <p class="footer-copy">© <span id="year">2026</span> Mommys Home · Kraków</p>
   </footer>
 
+  <!-- Mobile booking choice: open the Booksy app (Profile Link) or book in the on-page widget -->
+  <div class="book-sheet" id="bookSheet" hidden>
+    <div class="book-sheet-backdrop" data-sheet-close></div>
+    <div class="book-sheet-panel" role="dialog" aria-modal="true" aria-labelledby="bookSheetTitle">
+      <button type="button" class="book-sheet-x" data-sheet-close aria-label="Zamknij"></button>
+      <svg class="book-sheet-sygnet" aria-hidden="true"><use href="#sygnet"></use></svg>
+      <h2 id="bookSheetTitle">Umów wizytę</h2>
+      <p>Masz aplikację Booksy? Otwórz nasz salon bezpośrednio w niej. Nie masz? Zarezerwuj tutaj, bez instalowania.</p>
+      <a class="btn btn-primary book-sheet-app" href="https://mommyshome.booksy.com/" rel="noopener">Otwórz w aplikacji Booksy</a>
+      <button type="button" class="btn btn-ghost" id="bookSheetWidget">Zarezerwuj tutaj</button>
+    </div>
+  </div>
+
   <!-- Official Booksy booking widget: renders a hidden button and the booking overlay for business 104316 -->
   <script src="https://booksy.com/widget/code.js?id=104316&amp;country=pl&amp;lang=pl"></script>
   <script src="js/main.js"></script>
