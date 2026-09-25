@@ -255,29 +255,6 @@ button.btn {
   appearance: none;
 }
 
-/* iOS Safari tints its bottom toolbar from a real fixed element (pseudo-elements
-   are ignored) that is at least 80% wide, at least 3px tall and touches the
-   bottom edge; it must carry a plain background-color. The element sits mostly
-   below the edge so only a sliver shows, merging with the toolbar colour.
-   Rendered on iOS phones only (-webkit-touch-callout exists solely on iOS). */
-.ios-edge {
-  display: none;
-  position: fixed;
-  left: 0;
-  bottom: -8px;
-  width: 100%;
-  min-height: 12px;
-  background-color: var(--space-cadet);
-  z-index: 80;
-  pointer-events: none;
-}
-
-@supports (-webkit-touch-callout: none) {
-  @media (max-width: 720px) {
-    .ios-edge { display: block; }
-  }
-}
-
 /* ---------- Floating booking button ---------- */
 
 .fab-book {
@@ -354,12 +331,7 @@ body.booking-open .fab-book {
   .fab-book svg { width: 31px; height: 31px; }
 }
 
-/* The canvas colour is what iOS Safari paints behind the status bar and its
-   toolbar, and what shows when the page over-scrolls, so it matches the header. */
-html {
-  scroll-behavior: smooth;
-  background: var(--space-cadet);
-}
+html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-body);
@@ -1191,7 +1163,10 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + env(safe-area-inset-top, 0p
 }
 
 @media (max-width: 720px) {
-  :root { --nav-h: 72px; }
+  :root { --nav-h: 64px; }
+
+  .nav-sygnet { width: 38px; height: 34px; }
+  .nav-wordmark { font-size: 0.88rem; }
 
   .nav-links {
     position: fixed;
@@ -1207,21 +1182,45 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + env(safe-area-inset-top, 0p
 
   .nav.menu-open .nav-links { opacity: 1; visibility: visible; }
 
-  /* Solid header on phones at all times. iOS 26 Safari ignores theme-color and
-     tints its own bars from the background colour of the fixed element touching
-     the top edge; only an opaque colour gives a reliable result, and it also
-     keeps the header readable behind translucent in-app browser bars. */
-  .nav,
-  .nav.scrolled,
+  /* Phones: transparent full-width header over the hero; once scrolled it
+     detaches into a floating rounded glass pill (like the booking button),
+     inset from the edges and the top, so page content is meant to pass
+     behind and above it. */
+  .nav {
+    transition: background 0.4s ease, box-shadow 0.4s ease,
+      top 0.45s var(--ease), left 0.45s var(--ease), right 0.45s var(--ease),
+      padding 0.45s var(--ease), border-radius 0.45s var(--ease);
+  }
+
+  .nav-inner {
+    width: 100%;
+    padding: 0 1.5rem;
+    transition: height 0.45s var(--ease), padding 0.45s var(--ease);
+  }
+
+  .nav.scrolled {
+    top: calc(10px + env(safe-area-inset-top, 0px));
+    left: 12px;
+    right: 12px;
+    padding-top: 0;
+    border-radius: 999px;
+    background: rgba(47, 44, 97, 0.86);
+    box-shadow: 0 12px 32px rgba(47, 44, 97, 0.3), 0 2px 6px rgba(47, 44, 97, 0.15);
+  }
+
+  .nav.scrolled .nav-inner {
+    height: 56px;
+    padding: 0 10px 0 16px;
+  }
+
+  /* A blur on the header would shrink the fixed full-screen menu to the header's
+     size, so blur and background are dropped while the menu is open. */
   .nav.menu-open {
-    background: var(--space-cadet);
+    background: transparent;
     box-shadow: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
-
-  .nav .nav-logo { color: #fff; }
-  .nav .nav-burger span { background: #fff; }
 
   .nav-links a:not(.btn) { color: #fff; font-size: 1.3rem; }
   .nav.menu-open .nav-logo { color: #fff; position: relative; z-index: 110; }
