@@ -255,6 +255,23 @@ button.btn {
   appearance: none;
 }
 
+/* iOS Safari only (-webkit-touch-callout exists solely on iOS): a fixed strip
+   along the bottom edge gives Safari's toolbar the brand colour to sample.
+   It sits under the toolbar and the home indicator, below the floating button. */
+@supports (-webkit-touch-callout: none) {
+  body::after {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: max(env(safe-area-inset-bottom, 0px), 4px);
+    background: var(--space-cadet);
+    z-index: 80;
+    pointer-events: none;
+  }
+}
+
 /* ---------- Floating booking button ---------- */
 
 .fab-book {
@@ -1184,14 +1201,21 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + env(safe-area-inset-top, 0p
 
   .nav.menu-open .nav-links { opacity: 1; visibility: visible; }
 
-  /* backdrop-filter on the header would turn the fixed full-screen menu into a
-     header-sized box, so it is switched off while the menu is open. */
+  /* Solid header on phones at all times. iOS 26 Safari ignores theme-color and
+     tints its own bars from the background colour of the fixed element touching
+     the top edge; only an opaque colour gives a reliable result, and it also
+     keeps the header readable behind translucent in-app browser bars. */
+  .nav,
+  .nav.scrolled,
   .nav.menu-open {
-    background: transparent;
+    background: var(--space-cadet);
     box-shadow: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
+
+  .nav .nav-logo { color: #fff; }
+  .nav .nav-burger span { background: #fff; }
 
   .nav-links a:not(.btn) { color: #fff; font-size: 1.3rem; }
   .nav.menu-open .nav-logo { color: #fff; position: relative; z-index: 110; }
