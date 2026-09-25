@@ -255,20 +255,26 @@ button.btn {
   appearance: none;
 }
 
-/* iOS Safari only (-webkit-touch-callout exists solely on iOS): a fixed strip
-   along the bottom edge gives Safari's toolbar the brand colour to sample.
-   It sits under the toolbar and the home indicator, below the floating button. */
+/* iOS Safari tints its bottom toolbar from a real fixed element (pseudo-elements
+   are ignored) that is at least 80% wide, at least 3px tall and touches the
+   bottom edge; it must carry a plain background-color. The element sits mostly
+   below the edge so only a sliver shows, merging with the toolbar colour.
+   Rendered on iOS phones only (-webkit-touch-callout exists solely on iOS). */
+.ios-edge {
+  display: none;
+  position: fixed;
+  left: 0;
+  bottom: -8px;
+  width: 100%;
+  min-height: 12px;
+  background-color: var(--space-cadet);
+  z-index: 80;
+  pointer-events: none;
+}
+
 @supports (-webkit-touch-callout: none) {
-  body::after {
-    content: "";
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: max(env(safe-area-inset-bottom, 0px), 4px);
-    background: var(--space-cadet);
-    z-index: 80;
-    pointer-events: none;
+  @media (max-width: 720px) {
+    .ios-edge { display: block; }
   }
 }
 
