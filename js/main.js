@@ -82,9 +82,9 @@
     loader.setAttribute("aria-live", "polite");
     loader.innerHTML =
       '<svg viewBox="0 0 120 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
-      '<path class="draw draw-1" d="M12 50 L60 13 L108 50" fill="none" stroke="#2F2C61" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>' +
-      '<path class="draw draw-2" d="M25 51 V88 Q25 95 32 95 H88 Q95 95 95 88 V51" fill="none" stroke="#2F2C61" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>' +
-      '<path class="draw draw-3" d="M60 81 C44 70 41.5 57 51.5 53 C56.5 51 60 55 60 60 C60 55 63.5 51 68.5 53 C78.5 57 76 70 60 81 Z" fill="none" stroke="#E89CC4" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path class="draw draw-1" pathLength="100" d="M12 50 L60 13 L108 50" fill="none" stroke="#2F2C61" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path class="draw draw-2" pathLength="100" d="M25 51 V88 Q25 95 32 95 H88 Q95 95 95 88 V51" fill="none" stroke="#2F2C61" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path class="draw draw-3" pathLength="100" d="M60 81 C44 70 41.5 57 51.5 53 C56.5 51 60 55 60 60 C60 55 63.5 51 68.5 53 C78.5 57 76 70 60 81 Z" fill="none" stroke="#E89CC4" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>' +
       "</svg><p>Ładujemy rezerwację</p>";
     dialog.appendChild(loader);
 
