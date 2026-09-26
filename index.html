@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Mommys Home | Stylizacja brwi i rzęs, Kraków</title>
-  <meta name="description" content="Mommys Home to butikowy salon stylizacji brwi i rzęs w Krakowie. Laminacja brwi, lifting rzęs, makijaż permanentny i manicure. 5.0 na Booksy, ponad 4000 opinii. Umów wizytę online.">
-  <meta property="og:title" content="Mommys Home | Stylizacja brwi i rzęs, Kraków">
+  <title>Stylizacja brwi i rzęs Kraków | Mommys Home</title>
+  <meta name="description" content="Mommys Home, salon brwi i rzęs w Krakowie (Dworska 10/1): laminacja, regulacja i koloryzacja brwi, lifting rzęs, makijaż permanentny. 5.0 na Booksy, 4000+ opinii. Umów wizytę online.">
+  <meta property="og:title" content="Stylizacja brwi i rzęs Kraków | Mommys Home">
   <meta property="og:description" content="Butikowy salon brwi i rzęs w Krakowie. 5.0 na Booksy, ponad 4000 opinii. Umów wizytę online.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pl_PL">
@@ -115,6 +115,16 @@
 </head>
 <body>
 
+  <!-- Canonical host: www and the old pages.dev address go to the bare domain -->
+  <script>
+    (function () {
+      var h = window.location.hostname;
+      if (h === "www.mommyshomebrwi.com" || /\.pages\.dev$/.test(h)) {
+        window.location.replace("https://mommyshomebrwi.com" + window.location.pathname + window.location.search + window.location.hash);
+      }
+    })();
+  </script>
+
   <!-- Shared SVG symbols -->
   <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" class="svg-defs" aria-hidden="true">
     <defs>
@@ -169,11 +179,11 @@
       </div>
       <div class="hero-grid" aria-hidden="true"></div>
       <div class="hero-content">
-        <p class="hero-eyebrow anim-load anim-1">Salon brwi i rzęs</p>
-        <h1 class="hero-title">
+        <h1 class="hero-eyebrow anim-load anim-1">Salon brwi i rzęs</h1>
+        <p class="hero-title">
           <span class="line"><span class="line-inner anim-load anim-2">Twoje brwi</span></span>
           <span class="line"><span class="line-inner anim-load anim-3">Nasza pasja</span></span>
-        </h1>
+        </p>
         <p class="hero-sub anim-load anim-4"><span class="sub-line">Butikowy salon, w&nbsp;którym poczujesz się jak w&nbsp;domu</span><span class="sub-line">Zaufało nam ponad 11&nbsp;000 klientów</span></p>
         <div class="hero-cta anim-load anim-5">
           <a class="btn btn-primary" href="https://booksy.com/pl-pl/104316_mommys-home_salon-kosmetyczny_8820_krakow" target="_blank" rel="noopener" data-booksy="book">Umów wizytę na Booksy</a>

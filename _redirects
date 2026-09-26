@@ -1,3 +1,2 @@
-# Cloudflare Pages redirects: send the old pages.dev address to the custom domain
-https://mommyshome.pages.dev/* https://mommyshomebrwi.com/:splat 301
+https://:project.pages.dev/* https://mommyshomebrwi.com/:splat 301
 https://www.mommyshomebrwi.com/* https://mommyshomebrwi.com/:splat 301
