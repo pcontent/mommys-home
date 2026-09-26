@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" class="no-js">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -17,12 +17,16 @@
   <link rel="canonical" href="https://mommyshomebrwi.com/">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="theme-color" content="#2F2C61">
+  <!-- Without JavaScript the reveal animations never run, so the stylesheet shows everything while html.no-js is set -->
+  <script>document.documentElement.className = "js";</script>
+  <link rel="icon" href="favicon.ico" sizes="32x32">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Bump the ?v= value whenever css/style.css or js/main.js change, so browsers fetch the new files instead of a cached copy -->
-  <link rel="stylesheet" href="css/style.css?v=20260925-6">
+  <link rel="stylesheet" href="css/style.css?v=20260926-1">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -66,7 +70,6 @@
           "opens": "09:00",
           "closes": "21:00"
         },
-        "priceRange": "$$",
         "currenciesAccepted": "PLN",
         "paymentAccepted": "Gotówka, karta płatnicza",
         "sameAs": [
@@ -293,7 +296,7 @@
         <div class="blob blob-r2"></div>
       </div>
       <div class="container reviews-inner">
-        <p class="section-eyebrow reveal">Opinie</p>
+        <h2 class="section-eyebrow reveal">Opinie</h2>
         <div class="reviews-stars reveal" role="img" aria-label="Ocena 5.0 na 5">
           <svg class="review-star"><use href="#star"></use></svg>
           <svg class="review-star"><use href="#star"></use></svg>
@@ -301,7 +304,7 @@
           <svg class="review-star"><use href="#star"></use></svg>
           <svg class="review-star"><use href="#star"></use></svg>
         </div>
-        <h2 class="reviews-count reveal"><span id="counter" data-target="4000">0</span>+</h2>
+        <p class="reviews-count reveal"><span id="counter" data-target="4000">4000</span>+</p>
         <p class="reviews-text reveal">pięciogwiazdkowych opinii na Booksy.<br>Średnia ocena: <strong>5.0 / 5.0</strong></p>
         <a class="btn btn-light reveal" href="https://booksy.com/pl-pl/104316_mommys-home_salon-kosmetyczny_8820_krakow#reviews-section" target="_blank" rel="noopener">Przeczytaj opinie</a>
       </div>
@@ -325,6 +328,10 @@
             <li>
               <span class="contact-label">Godziny otwarcia</span>
               <span>pon. - sob.: 9:00 - 21:00</span>
+            </li>
+            <li>
+              <span class="contact-label">Płatność</span>
+              <span>Gotówka lub karta</span>
             </li>
             <li>
               <span class="contact-label">Instagram</span>
@@ -385,7 +392,7 @@
     <div class="book-sheet-panel" role="dialog" aria-modal="true" aria-labelledby="bookSheetTitle">
       <button type="button" class="book-sheet-x" data-sheet-close aria-label="Zamknij"></button>
       <svg class="book-sheet-sygnet" aria-hidden="true"><use href="#sygnet"></use></svg>
-      <h2 id="bookSheetTitle">Umów wizytę</h2>
+      <p class="book-sheet-title" id="bookSheetTitle">Umów wizytę</p>
       <p>Masz aplikację Booksy? Otwórz nasz salon bezpośrednio w niej. Nie masz? Zarezerwuj tutaj, bez instalowania.</p>
       <!-- Booksy deep link (Branch long link on Booksy's own domain): mobile_deeplink=show_business/104316 opens this salon inside the Booksy app -->
       <a class="btn btn-primary book-sheet-app" href="https://cdl.booksy.com/a/key_live_flhKTnRyt5fr4gPqB7FzBnmmFyhDVlR1?mobile_deeplink=show_business%2F104316&amp;$canonical_url=https%3A%2F%2Fbooksy.com%2Fpl-pl%2F104316_mommys-home_salon-kosmetyczny_8820_krakow&amp;$desktop_url=https%3A%2F%2Fbooksy.com%2Fpl-pl%2F104316_mommys-home_salon-kosmetyczny_8820_krakow&amp;~feature=website&amp;~channel=mommyshomebrwi.com" rel="noopener">Otwórz w aplikacji Booksy</a>
@@ -395,6 +402,6 @@
 
   <!-- Official Booksy booking widget: renders a hidden button and the booking overlay for business 104316 -->
   <script src="https://booksy.com/widget/code.js?id=104316&amp;country=pl&amp;lang=pl"></script>
-  <script src="js/main.js?v=20260925-6"></script>
+  <script src="js/main.js?v=20260926-1"></script>
 </body>
 </html>

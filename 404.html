@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Strona nie znaleziona | Mommys Home</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#2F2C61">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800&family=Manrope:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --space-cadet: #2F2C61;
+      --liberty: #6461A9;
+      --kobi: #E89CC4;
+      --blush: #FCE5EA;
+      --lavender-web: #E8EAF7;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; }
+    body {
+      font-family: "Manrope", system-ui, sans-serif;
+      color: #fff;
+      background: var(--space-cadet);
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(100, 97, 169, 0.7), transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(232, 156, 196, 0.35), transparent 45%);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: calc(2rem + env(safe-area-inset-top, 0px)) 1.5rem calc(2rem + env(safe-area-inset-bottom, 0px));
+      text-align: center;
+    }
+    main { max-width: 34rem; }
+    .sygnet { width: 72px; height: 66px; color: var(--blush); margin-bottom: 1.5rem; }
+    .code {
+      font-family: "League Spartan", sans-serif;
+      font-weight: 800;
+      font-size: clamp(5rem, 22vw, 9rem);
+      line-height: 0.9;
+      background: linear-gradient(90deg, var(--blush), var(--kobi));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    h1 {
+      font-family: "League Spartan", sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: clamp(1.4rem, 5vw, 2rem);
+      margin: 1rem 0 0.8rem;
+    }
+    p { color: var(--lavender-web); line-height: 1.6; margin-bottom: 2rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; }
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 1.6rem;
+      border-radius: 999px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: #fff; color: var(--space-cadet); }
+    .btn-ghost { border: 2px solid rgba(255, 255, 255, 0.55); color: #fff; }
+    .btn-ghost:hover { background: rgba(255, 255, 255, 0.1); }
+  </style>
+</head>
+<body>
+  <main>
+    <svg class="sygnet" viewBox="0 0 120 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M12 50 L60 13 L108 50" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M25 51 V88 Q25 95 32 95 H88 Q95 95 95 88 V51" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M60 81 C44 70 41.5 57 51.5 53 C56.5 51 60 55 60 60 C60 55 63.5 51 68.5 53 C78.5 57 76 70 60 81 Z" fill="none" stroke="#E89CC4" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <p class="code" aria-hidden="true">404</p>
+    <h1>Tej strony nie ma</h1>
+    <p>Adres mógł się zmienić albo zawiera literówkę. Wszystko, czego szukasz, znajdziesz na stronie głównej.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="/">Wróć na stronę główną</a>
+      <a class="btn btn-ghost" href="https://booksy.com/pl-pl/104316_mommys-home_salon-kosmetyczny_8820_krakow" target="_blank" rel="noopener">Umów wizytę na Booksy</a>
+    </div>
+  </main>
+</body>
+</html>

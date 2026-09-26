@@ -273,6 +273,8 @@
   var counter = document.getElementById("counter");
   if (counter) {
     var target = parseInt(counter.getAttribute("data-target"), 10) || 0;
+    /* The HTML carries the final number for crawlers that do not run scripts; start from 0 only when the count-up will run */
+    if ("IntersectionObserver" in window && !reducedMotion) counter.textContent = "0";
     var animateCounter = function () {
       if (reducedMotion) {
         counter.textContent = String(target);

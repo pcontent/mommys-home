@@ -226,7 +226,7 @@ body .booksy-widget-dialog {
   margin-bottom: 0.5rem;
 }
 
-.book-sheet h2 {
+.book-sheet .book-sheet-title {
   font-family: var(--font-head);
   font-weight: 800;
   text-transform: uppercase;
@@ -1267,3 +1267,10 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + env(safe-area-inset-top, 0p
 
   .ghost-text { transform: translateY(-50%) !important; }
 }
+
+/* No JavaScript: nothing can start the animations, so show the content directly */
+html.no-js .preloader { display: none; }
+html.no-js .anim-load,
+html.no-js .hero-title .anim-load { opacity: 1; transform: none; animation: none; }
+html.no-js .reveal { opacity: 1; transform: none; }
+html.no-js .review-star { opacity: 1; transform: none; }
